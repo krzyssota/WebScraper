@@ -8,9 +8,6 @@ import (
 )
 
 func main() {
-	// stop words sources:
-	// https://github.com/bieli/stopwords/blob/master/polish.stopwords.txt
-	// https://gist.github.com/sebleier/554280
 	rp := formatter.NewResultPresenter("formatter/stop_words.txt", 1)
 
 	// prepare urls to scrape
@@ -24,6 +21,7 @@ func main() {
 	// create web scraper
 	urlChannel := make(chan string, len(urls))
 	urlsSent := make(chan int)
+	// defer closing owned channels
 	defer close(urlChannel)
 	defer close(urlsSent)
 	resultChannel := make(chan webscraper.ResultWithError, len(urls))
